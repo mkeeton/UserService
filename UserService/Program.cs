@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Data.EF;
 using UserService.Data.EF.Interfaces;
 using UserService.Data.EF.Repositories;
+using UserService.IOC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<UnitOfWork>();
-
-builder.Services.AddDbContext<ApplicationDbContext>(opt => opt
-    .UseSqlServer("Server=DESKTOP-UUBJ14C\\SQLEXPRESS; Database=OrderDb;Trusted_Connection=True;"));
+DataInjection.ConfigureServices(builder);
 
 var app = builder.Build();
 

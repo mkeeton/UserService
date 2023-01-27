@@ -19,5 +19,10 @@ namespace UserService.Data.EF
             _context = dbContext;
             Users = userRepository;
         }
+
+        public async Task<int> Commit()
+        {
+          return await _context.SaveChangesAsync();
+        }
     }
 }
