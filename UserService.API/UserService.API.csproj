@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>b839d4f4-a6b7-425b-9f97-4eb3253808cc</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\UserService.Interface\UserService.Interface.csproj" />
     <ProjectReference Include="..\UserService.Data.EF\UserService.Data.EF.csproj" />
+    <ProjectReference Include="..\UserService.Infrastructure\UserService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

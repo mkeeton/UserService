@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Data.EF;
 using UserService.Data.EF.Interfaces;
 using UserService.Data.EF.Repositories;
-using UserService.IOC;
+using UserService.API.IOC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-DataInjection.ConfigureServices(builder);
+DataInjection.ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 

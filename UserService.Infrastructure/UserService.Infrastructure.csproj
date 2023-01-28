@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\UserService.Interface\UserService.Interface.csproj" />
+    <ProjectReference Include="..\UserService.Data.EF\UserService.Data.EF.csproj" />
+  </ItemGroup>
+
 </Project>

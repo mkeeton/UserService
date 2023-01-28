@@ -12,7 +12,7 @@ namespace UserService.Data.EF
 
         private readonly ApplicationDbContext _context;
 
-        IUserRepository Users { get; }
+        public IUserRepository Users { get; }
 
         public UnitOfWork(ApplicationDbContext dbContext, IUserRepository userRepository)
         {

@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["UserService/UserService.csproj", "UserService/"]
-RUN dotnet restore "UserService/UserService.csproj"
+COPY ["UserService.GraphQL/UserService.GraphQL.csproj", "UserService.GraphQL/"]
+RUN dotnet restore "UserService.GraphQL/UserService.GraphQL.csproj"
 COPY . .
-WORKDIR "/src/UserService"
-RUN dotnet build "UserService.csproj" -c Release -o /app/build
+WORKDIR "/src/UserService.GraphQL"
+RUN dotnet build "UserService.GraphQL.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "UserService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "UserService.GraphQL.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "UserService.dll"]
+ENTRYPOINT ["dotnet", "UserService.GraphQL.dll"]

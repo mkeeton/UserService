@@ -1,26 +1,39 @@
+version: '3.4'
+
 services:
-    reactcore:
-        build:
-            context: .
-            dockerfile: UserService/Dockerfile
-        container_name: userservice_web
-        ports: 
-            - "8080:80"
-            - "8081:443"
-        volumes:
-        depends_on:
-            - sql1
-    sql1:
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        container_name: userservice_sql1
-        ports:
-            - "1433:1433"
-        volumes: 
-            - sqlvolume:/var/opt/mssql
-        environment: 
-            ACCEPT_EULA: "Y"
-            MSSQL_SA_PASSWORD: "8E1Nu0tlxN3d"
-            MSSQL_PID: "Express"
+  userservice.api:
+    image: ${DOCKER_REGISTRY-}userserviceapi
+    build:
+      context: .
+      dockerfile: UserService.API/Dockerfile
+    container_name: userservice_api
+    ports: 
+      - "8080:80"
+      - "8081:443"
+    depends_on:
+        - sql1
+  userservice.graphql:
+    image: ${DOCKER_REGISTRY-}userservicegraphql
+    build:
+      context: .
+      dockerfile: UserService.GraphQL/Dockerfile
+    container_name: userservice_graphql
+    ports: 
+      - "8082:80"
+      - "8083:443"
+    depends_on:
+        - sql1
+  sql1:
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      container_name: userservice_sql1
+      ports:
+          - "1433:1433"
+      volumes: 
+          - sqlvolume:/var/opt/mssql
+      environment: 
+          ACCEPT_EULA: "Y"
+          MSSQL_SA_PASSWORD: "8E1Nu0tlxN3d"
+          MSSQL_PID: "Express"
 volumes:
     sqlvolume:
       external: true
