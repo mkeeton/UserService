@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using UserService.Data.EF.Interfaces;
@@ -25,6 +26,11 @@ namespace UserService.Data.EF.Repositories
         public async Task<IEnumerable<UserModel>> GetUserByEmail(string email)
         {
             return await _context.Users.Where(u => u.Email.Equals(email,StringComparison.InvariantCultureIgnoreCase)).ToListAsync();
+        }
+        
+        public async Task<UserModel> AddUser(UserModel newUser)
+        {
+            return (await _context.Users.AddAsync(newUser)).Entity;
         }
     }
 }

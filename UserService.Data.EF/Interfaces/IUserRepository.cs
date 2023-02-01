@@ -10,5 +10,6 @@ namespace UserService.Data.EF.Interfaces
     public interface IUserRepository
     {
       Task<IEnumerable<UserModel>> GetUsers();
+        Task<UserModel> AddUser(UserModel newUser);
     }
 }
