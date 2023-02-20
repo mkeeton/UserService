@@ -14,5 +14,7 @@ namespace UserService.Data.EF
         { }
 
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<RoleModel> Roles { get; set; }
+        public DbSet<UserRoleModel> UserRoles { get; set; }
     }
 }

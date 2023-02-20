@@ -13,11 +13,15 @@ namespace UserService.Data.EF
         private readonly ApplicationDbContext _context;
 
         public IUserRepository Users { get; }
+        public IRoleRepository Roles { get; }
+        public IUserRoleRepository UserRoles { get; }
 
-        public UnitOfWork(ApplicationDbContext dbContext, IUserRepository userRepository)
+        public UnitOfWork(ApplicationDbContext dbContext, IUserRepository userRepository, IRoleRepository roleRepository, IUserRoleRepository userRoleRepository)
         {
             _context = dbContext;
             Users = userRepository;
+            Roles = roleRepository;
+            UserRoles = userRoleRepository;
         }
 
         public async Task<int> Commit()

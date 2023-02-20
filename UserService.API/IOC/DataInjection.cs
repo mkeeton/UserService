@@ -15,6 +15,8 @@ namespace UserService.API.IOC
       .UseSqlServer(_dbConfig.ConnectionString));
       services.AddScoped<UnitOfWork>();
       services.AddScoped<IUserRepository, UserRepository>();
+      services.AddScoped<IRoleRepository, RoleRepository>();
+      services.AddScoped<IUserRoleRepository, UserRoleRepository>();
     }
   }
 }

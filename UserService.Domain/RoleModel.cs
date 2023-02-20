@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace UserService.Domain
 {
-    public class UserModel
+    public class RoleModel
     {
         [Key]
         public Guid Id { get; set; }
-        public string Email { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public IEnumerable<UserRoleModel> UserRoles { get; set; } = new List<UserRoleModel>();
-
+        public string RoleName { get; set; }
+        public IEnumerable<UserRoleModel> RoleUsers { get; set; } = new List<UserRoleModel>();
     }
 }
