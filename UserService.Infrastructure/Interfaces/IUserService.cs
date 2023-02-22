@@ -11,6 +11,7 @@ namespace UserService.Infrastructure.Interfaces
   {
 
     Task<IEnumerable<ExistingUser>> GetUsers();
-    Task<ExistingUser> AddUser(NewUser newUser);
+        IEnumerable<ExistingUser> GetUsers2();
+        Task<ExistingUser> AddUser(NewUser newUser);
   }
 }

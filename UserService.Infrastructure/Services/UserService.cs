@@ -20,18 +20,28 @@ namespace UserService.Infrastructure.Services
     }
     public async Task<IEnumerable<ExistingUser>> GetUsers()
     {
-            //UserModel _newUser = new Domain.UserModel()
-            //{
-            //    Firstname = "Bobby",
-            //    Lastname = "Brown",
-            //    Email = "Bobby@Brown",
-            //};
-            //await _unitOfWork.Users.AddUser(_newUser);
-            //await _unitOfWork.Commit();
             IEnumerable<ExistingUser> _users = (await _unitOfWork.Users.GetUsers()).Select(u => new ExistingUser() { Id = u.Id, Email = u.Email, Firstname = u.Firstname, Lastname = u.Lastname });
             return (_users);
     }
-    public async Task<ExistingUser> AddUser(NewUser newUser)
+
+        public IEnumerable<ExistingUser> GetUsers2()
+        {
+            ExistingUser _newUser = new ExistingUser()
+            {
+                Firstname = "Bobby",
+                Lastname = "Brown",
+                Email = "Bobby@Brown",
+            };
+            List<ExistingUser> _users = new List<ExistingUser>();
+            _users.Add(_newUser);
+            //await _unitOfWork.Users.AddUser(_newUser);
+            //await _unitOfWork.Commit();
+            //var _temp = "hello there";
+
+            //IEnumerable<ExistingUser> _users = (await _unitOfWork.Users.GetUsers()).Select(u => new ExistingUser() { Id = u.Id, Email = u.Email, Firstname = u.Firstname, Lastname = u.Lastname });
+            return (_users);
+        }
+        public async Task<ExistingUser> AddUser(NewUser newUser)
     {
             UserModel _newUser = new Domain.UserModel()
             {

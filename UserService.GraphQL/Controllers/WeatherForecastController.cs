@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using UserService.Infrastructure.Interfaces;
 
 namespace UserService.GraphQL.Controllers
 {
@@ -12,22 +13,28 @@ namespace UserService.GraphQL.Controllers
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    IUserService _userService;
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IUserService userService)
     {
       _logger = logger;
+      _userService = userService;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
-    {
-      return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-      {
-        Date = DateTime.Now.AddDays(index),
-        TemperatureC = Random.Shared.Next(-20, 55),
-        Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-      })
-      .ToArray();
+        //[HttpGet(Name = "GetWeatherForecast")]
+        //public IEnumerable<WeatherForecast> Get()
+        //{
+        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        //    {
+        //    Date = DateTime.Now.AddDays(index),
+        //    TemperatureC = Random.Shared.Next(-20, 55),
+        //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        //    })
+        //    .ToArray();
+        //}
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _userService.GetUsers());
+        }
     }
-  }
 }

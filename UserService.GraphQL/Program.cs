@@ -4,6 +4,7 @@ using System.Web.Http.Dependencies;
 using GraphQL.MicrosoftDI;
 using GraphQL.Types;
 using UserService.GraphQL.GraphQL;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,9 +24,16 @@ builder.Services.AddGraphQL(options =>
                     {
                         opt.EnableMetrics = true;
                         return next(opt);
-                    }).AddSystemTextJson()
+                    }).AddSystemTextJson().AddErrorInfoProvider(opt => opt.ExposeExceptionDetails = true).AddNewtonsoftJson()
                 );
-
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
