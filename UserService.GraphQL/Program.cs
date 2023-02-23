@@ -5,6 +5,8 @@ using GraphQL.MicrosoftDI;
 using GraphQL.Types;
 using UserService.GraphQL.GraphQL;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using UserService.Data.EF;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,9 +41,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
-  app.UseSwaggerUI();
-  app.UseGraphQLAltair();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseGraphQLAltair();
+
+    await using var scope = app.Services.CreateAsyncScope();
+    using var db = scope.ServiceProvider.GetService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
 }
 
 app.UseHttpsRedirection();
