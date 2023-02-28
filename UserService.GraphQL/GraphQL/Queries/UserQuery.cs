@@ -2,7 +2,7 @@
 using GraphQL.Types;
 using UserService.Infrastructure.Interfaces;
 using UserService.Interface;
-using UserService.Interface.GraphQL.User;
+using UserService.Interface.GraphQL.Outputs.User;
 
 namespace UserService.GraphQL.GraphQL.Queries
 {

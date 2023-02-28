@@ -8,15 +8,15 @@ using System.Xml.Linq;
 
 namespace UserService.Interface.GraphQL.Inputs.User
 {
-    public class NewUserType : ObjectGraphType<NewUser>
+    public class NewUserType : InputObjectGraphType<NewUser>
     {
         public NewUserType()
         {
             Name = "NewUser";
             Description = "New User";
-            Field(d => d.Firstname, nullable: true).Description("User First Name");
-            Field(d => d.Lastname, nullable: true).Description("User Last Name");
-            Field(d => d.Email, nullable: true).Description("User Email Address");
+            Field<NonNullGraphType<StringGraphType>>("firstname");
+            Field< NonNullGraphType<StringGraphType>>("lastname");
+            Field<NonNullGraphType<StringGraphType>>("email");
         }
     }
 }
