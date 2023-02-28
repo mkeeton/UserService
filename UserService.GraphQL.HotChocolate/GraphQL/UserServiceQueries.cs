@@ -1,4 +1,5 @@
-﻿using UserService.GraphQL.HotChocolate.GraphQL.Queries;
+﻿using Sentry;
+using UserService.GraphQL.HotChocolate.GraphQL.Queries;
 
 namespace UserService.GraphQL.HotChocolate.GraphQL
 {
@@ -9,7 +10,15 @@ namespace UserService.GraphQL.HotChocolate.GraphQL
         {
             services.AddGraphQLServer()
                 .AddQueryType(q => q.Name("Query"))
-                .AddType<UserQuery>();
+                .AddType<UserQuery>()
+                .AddErrorFilter(error =>
+                {
+                    if (error.Exception!=null)
+                    {
+                        SentrySdk.CaptureException(error.Exception);
+                    }
+                    return error;
+                });
         }
     }
 }

@@ -3,6 +3,7 @@ using UserService.Data.EF;
 using UserService.Data.EF.Interfaces;
 using UserService.Data.EF.Repositories;
 using UserService.API.IOC;
+using Sentry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 
 DataInjection.ConfigureServices(builder.Services, builder.Configuration);
 ServiceInjection.ConfigureServices(builder.Services, builder.Configuration);
+
+builder.WebHost.UseSentry();
 
 var app = builder.Build();
 
@@ -30,5 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSentryTracing();
 
 app.Run();

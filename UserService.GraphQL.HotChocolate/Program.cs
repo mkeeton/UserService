@@ -1,3 +1,4 @@
+using Sentry;
 using UserService.GraphQL.HotChocolate.GraphQL;
 using UserService.GraphQL.HotChocolate.GraphQL.Queries;
 using UserService.GraphQL.HotChocolate.IOC;
@@ -17,6 +18,8 @@ ServiceInjection.ConfigureServices(builder.Services, builder.Configuration);
 
 UserServiceQueries.AddQueries(builder.Services);
 
+builder.WebHost.UseSentry();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,5 +36,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGraphQL();
+
+app.UseSentryTracing();
 
 app.Run();
