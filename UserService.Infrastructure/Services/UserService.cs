@@ -18,11 +18,32 @@ namespace UserService.Infrastructure.Services
     {
       _unitOfWork = unitOfWork;
     }
-    public async Task<IEnumerable<ExistingUser>> GetUsers()
-    {
-            IEnumerable<ExistingUser> _users = (await _unitOfWork.Users.GetUsers()).Select(u => new ExistingUser() { Id = u.Id, Email = u.Email, Firstname = u.Firstname, Lastname = u.Lastname });
-            return (_users);
-    }
+        public async Task<IEnumerable<ExistingUser>> GetUsers()
+        {
+                IEnumerable<ExistingUser> _users = (await _unitOfWork.Users.GetUsers()).Select(u => new ExistingUser() { Id = u.Id, Email = u.Email, Firstname = u.Firstname, Lastname = u.Lastname });
+                return (_users);
+        }
+
+        public async Task<ExistingUser?> GetUser(Guid userId)
+        {
+            UserModel _user = await _unitOfWork.Users.GetUser(userId);
+            if(_user!=null)
+            {
+                return await GetUser(_user);
+            }
+            return null;
+        }
+
+        public async Task<ExistingUser> GetUser(UserModel user)
+        {
+            return new ExistingUser()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname
+            };
+        }
 
         public IEnumerable<ExistingUser> GetUsers2()
         {
@@ -45,19 +66,13 @@ namespace UserService.Infrastructure.Services
     {
             UserModel _newUser = new Domain.UserModel()
             {
-                Firstname = "Billy",
-                Lastname = "Batson",
-                Email = "billy@shazam.com",
+                Firstname = newUser.Firstname,
+                Lastname = newUser.Lastname,
+                Email = newUser.Email,
             };
             UserModel _addedUser = await _unitOfWork.Users.AddUser(_newUser);
             await _unitOfWork.Commit();
-            return new ExistingUser()
-            {
-                Id = _addedUser.Id,
-            Firstname=_addedUser.Firstname,
-            Lastname = _addedUser.Lastname,
-            Email = _addedUser.Email
-            };
+            return await GetUser(_addedUser);
     }
   }
 }

@@ -23,6 +23,11 @@ namespace UserService.Data.EF.Repositories
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<UserModel?> GetUser(Guid userId)
+        {
+            return await _context.Users.Where(u => u.Id==userId).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<UserModel>> GetUserByEmail(string email)
         {
             return await _context.Users.Where(u => u.Email.Equals(email,StringComparison.InvariantCultureIgnoreCase)).ToListAsync();

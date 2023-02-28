@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 DataInjection.ConfigureServices(builder.Services, builder.Configuration);
 ServiceInjection.ConfigureServices(builder.Services, builder.Configuration);
 
-UserServiceQueries.AddQueries(builder.Services);
+GraphQLConfig.Configure(builder.Services);
 
 builder.WebHost.UseSentry();
 

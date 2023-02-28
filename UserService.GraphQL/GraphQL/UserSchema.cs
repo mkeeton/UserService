@@ -9,6 +9,7 @@ namespace UserService.GraphQL.GraphQL
         public UserSchema(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             Query = serviceProvider.GetRequiredService<UserServiceQueries>();
+            Mutation = serviceProvider.GetRequiredService<UserServiceMutations>();
         }
     }
 }

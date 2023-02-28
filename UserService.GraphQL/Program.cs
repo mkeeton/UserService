@@ -36,6 +36,9 @@ builder.Services.Configure<IISServerOptions>(options =>
 {
     options.AllowSynchronousIO = true;
 });
+
+builder.WebHost.UseSentry();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -57,5 +60,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseGraphQL();
+
+app.UseSentryTracing();
 
 app.Run();

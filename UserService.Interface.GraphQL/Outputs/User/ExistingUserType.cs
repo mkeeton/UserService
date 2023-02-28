@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace UserService.Interface.GraphQL.User
+namespace UserService.Interface.GraphQL.Outputs.User
 {
     public class ExistingUserType : ObjectGraphType<ExistingUser>
     {
