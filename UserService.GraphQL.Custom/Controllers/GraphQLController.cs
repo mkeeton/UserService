@@ -34,8 +34,7 @@ namespace UserService.GraphQL.Custom.Controllers
                 Schema = this.schema,
                 Query = query.Query,
                 Variables = new Inputs(query.Variables?.ToObject<Dictionary<string,object?>>()),
-                EnableMetrics = true,
-                UserContext = new Dictionary<string,object?>()
+                UserContext = new GraphQLUserContext()
             };
             executionOptions.Listeners.Add(this.dataLoaderDocumentListener);
 

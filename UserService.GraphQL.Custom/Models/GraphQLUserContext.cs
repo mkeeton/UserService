@@ -1,4 +1,6 @@
-﻿namespace UserService.GraphQL.Custom.Models
+﻿using GraphQL;
+
+namespace UserService.GraphQL.Custom.Models
 {
     public interface IGraphQlUserContext
     {
@@ -6,7 +8,7 @@
         dynamic PropBag { get; set; }
     }
 
-    public class GraphQLUserContext : IGraphQlUserContext
+    public class GraphQLUserContext : Dictionary<string,object?>, IGraphQlUserContext
     {
         public GraphQLUserContext(string correlationId)
         {
@@ -20,8 +22,7 @@
             this.PropBag = new { };
         }
 
-        public dynamic PropBag { get; set; }
-
         public string CorrelationId { get; set; }
+        public dynamic PropBag { get; set; }
     }
 }
